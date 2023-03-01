@@ -1,17 +1,17 @@
 function add(a, b) {
-    return a + b;
+    return parseFloat(a) + parseFloat(b);
 }
 
 function subtract(a, b) {
-    return a - b;
+    return parseFloat(a) - parseFloat(b);
 }
 
 function multiply(a, b) {
-    return a * b;
+    return parseFloat(a) * parseFloat(b);
 }
 
 function divide(a, b) {
-    return a / b;
+    return parseFloat(a) / parseFloat(b);
 }
 
 function operate(operator, a, b) {
@@ -22,25 +22,76 @@ function operate(operator, a, b) {
     } else if (operator === '*') {
         multiply(a, b);
     } else if (operator === '/') {
-        devide(a, b);
+        divide(a, b);
     }
 }
 
+function clears() {
+    operator = '';
+    displayValue = '';
+    firstValue = '';
+    secondValue = '';
+    display.innerText = '';
+    const findCurrentCalcDisplay = document.getElementById('currentCalculation');
+    findCurrentCalcDisplay.remove();
+
+}
+
+let operator;
+let displayValue;
+let firstValue;
+let secondValue;
+
+const main = document.getElementById('main');
 const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.num');
-const add = document.getElementById('add');
-const subtract = document.getElementById('subtract');
-const multiply = document.getElementById('multiply');
-const divide = document.getElementById('divide');
+const math = document.querySelectorAll('.math');
+const addition = document.getElementById('addition');
+const subtraction = document.getElementById('subtraction');
+const multiplication = document.getElementById('multiplication');
+const division = document.getElementById('division');
 const clear = document.getElementById('clear');
+const equals = document.getElementById('equals');
 
-let displayValue;
+addition.onclick = () => operator = 'add';
+subtraction.onclick = () => operator = 'subtract';
+multiplication.onclick = () => operator = 'multiply';
+division.onclick = () => operator = 'divide';
+clear.onclick = () => clears();
+
 buttons.forEach(button => {
-    button.addEventListener('click', function(e){
+    button.addEventListener('click', function(e) {
         display.innerText += button.innerText;
         displayValue = display.innerText;
     })
     
 });
 
-console.log(displayValue);
+math.forEach(button => {
+    button.addEventListener('click', function(e) {
+        firstValue = displayValue;
+        display.innerText = '';
+        const currentCalculation = document.createElement('p');
+        currentCalculation.innerText = firstValue + ' ' + e.target.innerText;
+        currentCalculation.setAttribute('id', 'currentCalculation');
+        main.insertBefore(currentCalculation, display);
+    })
+    
+});
+
+equals.addEventListener('click', function(e) {
+    secondValue = displayValue;
+    const findCurrentCalcDisplay = document.getElementById('currentCalculation');
+    findCurrentCalcDisplay.innerText = findCurrentCalcDisplay.innerText + ' ' + secondValue + ' ' + '=';
+    if (operator === 'add'){
+        display.innerText = add(firstValue, secondValue);
+    } else if (operator === 'subtract'){
+        display.innerText = subtract(firstValue, secondValue);
+    } else if (operator === 'multiply'){
+        display.innerText = multiply(firstValue, secondValue);
+    } else if (operator === 'divide'){
+        display.innerText = divide(firstValue, secondValue);
+    } 
+})
+
+
