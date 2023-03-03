@@ -76,7 +76,11 @@ buttons.forEach(numberButton => {
 
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
-        if(display.innerText === '') return;
+        if(display.innerText === '') {
+            sumDisplay.innerText = sum + operator;
+            prevOperator = e.target.innerText;
+            return;
+        }
         const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         prevOperator = runningCalc[runningCalc.length-1];
@@ -86,13 +90,13 @@ math.forEach(operatorButton => {
         } else {
             secondValue = displayValue;
             sum = operate(prevOperator, sum, secondValue);
-            sumDisplay.innerText = sum;
+            sumDisplay.innerText = sum + operator;
         }
         display.innerText = '';
         if(removeEqual[0] !== '='){
-        upperDisplay.innerText += (upperDisplay.childNodes !== true) ? displayValue + ' ' + e.target.innerText:secondValue + ' ' + e.target.innerText;
+        upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
         } else {
-            upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + e.target.innerText;
+            upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
         }
     })
 
@@ -102,6 +106,7 @@ equals.addEventListener('click', function (e) {
     secondValue = displayValue;
     display.innerText = operate(operator, sum, secondValue);
     upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+    sumDisplay.innerText = '';
 })
 
 
