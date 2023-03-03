@@ -27,11 +27,12 @@ function operate(operator, a, b) {
 }
 
 function clears() {
-    operator = '';
-    displayValue = '';
-    firstValue = '';
-    secondValue = '';
-    sum ='';
+    operator = undefined;
+    prevOperator = undefined;
+    displayValue = undefined;
+    firstValue = undefined;
+    secondValue = undefined;
+    sum = undefined;
     display.innerText = '';
     upperDisplay.innerText = '';
 
