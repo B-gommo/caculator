@@ -16,13 +16,13 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator === '+') {
-        add(a, b);
+        return sum = add(a, b);
     } else if (operator === '-') {
-        subtract(a, b);
+        return sum = subtract(a, b);
     } else if (operator === '*') {
-        multiply(a, b);
+        return sum = multiply(a, b);
     } else if (operator === '/') {
-        divide(a, b);
+        return sum = divide(a, b);
     }
 }
 
@@ -31,9 +31,9 @@ function clears() {
     displayValue = '';
     firstValue = '';
     secondValue = '';
+    sum ='';
     display.innerText = '';
-    const findCurrentCalcDisplay = document.getElementById('currentCalculation');
-    findCurrentCalcDisplay.remove();
+    upperDisplay.innerText = '';
 
 }
 
@@ -41,8 +41,10 @@ let operator;
 let displayValue;
 let firstValue;
 let secondValue;
+let sum;
 
 const main = document.getElementById('main');
+const upperDisplay = document.getElementById('upper-display');
 const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.num');
 const math = document.querySelectorAll('.math');
@@ -53,45 +55,40 @@ const division = document.getElementById('division');
 const clear = document.getElementById('clear');
 const equals = document.getElementById('equals');
 
-addition.onclick = () => operator = 'add';
-subtraction.onclick = () => operator = 'subtract';
-multiplication.onclick = () => operator = 'multiply';
-division.onclick = () => operator = 'divide';
+addition.onclick = () => operator = '+';
+subtraction.onclick = () => operator = '-';
+multiplication.onclick = () => operator = '*';
+division.onclick = () => operator = '/';
 clear.onclick = () => clears();
 
-buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-        display.innerText += button.innerText;
+
+buttons.forEach(numberButton => {
+    numberButton.addEventListener('click', function (e) {
+        display.innerText += numberButton.innerText;
         displayValue = display.innerText;
     })
-    
+
 });
 
-math.forEach(button => {
-    button.addEventListener('click', function(e) {
-        firstValue = displayValue;
+math.forEach(operatorButton => {
+    operatorButton.addEventListener('click', function (e) {
+        if (isNaN(firstValue)) {
+            firstValue = displayValue;
+        } else {
+            secondValue = displayValue;
+            sum = operate(operator, firstValue, secondValue);
+            firstValue = sum;
+        }
         display.innerText = '';
-        const currentCalculation = document.createElement('p');
-        currentCalculation.innerText = firstValue + ' ' + e.target.innerText;
-        currentCalculation.setAttribute('id', 'currentCalculation');
-        main.insertBefore(currentCalculation, display);
+        upperDisplay.innerText += (upperDisplay.childNodes !== true) ? displayValue + ' ' + e.target.innerText:secondValue + ' ' + e.target.innerText ;
     })
-    
+
 });
 
-equals.addEventListener('click', function(e) {
+equals.addEventListener('click', function (e) {
     secondValue = displayValue;
-    const findCurrentCalcDisplay = document.getElementById('currentCalculation');
-    findCurrentCalcDisplay.innerText = findCurrentCalcDisplay.innerText + ' ' + secondValue + ' ' + '=';
-    if (operator === 'add'){
-        display.innerText = add(firstValue, secondValue);
-    } else if (operator === 'subtract'){
-        display.innerText = subtract(firstValue, secondValue);
-    } else if (operator === 'multiply'){
-        display.innerText = multiply(firstValue, secondValue);
-    } else if (operator === 'divide'){
-        display.innerText = divide(firstValue, secondValue);
-    } 
+    display.innerText = operate(operator, firstValue, secondValue);
+    upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
 })
 
 
