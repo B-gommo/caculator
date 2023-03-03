@@ -78,8 +78,10 @@ math.forEach(operatorButton => {
         prevOperator = runningCalc[runningCalc.length-1];
         if (isNaN(firstValue)) {
             firstValue = displayValue;
+            sum = displayValue;
         } else {
             secondValue = displayValue;
+            sum = operate(prevOperator, sum, secondValue);
         }
         display.innerText = '';
         upperDisplay.innerText += (upperDisplay.childNodes !== true) ? displayValue + ' ' + e.target.innerText:secondValue + ' ' + e.target.innerText ;
@@ -89,7 +91,7 @@ math.forEach(operatorButton => {
 
 equals.addEventListener('click', function (e) {
     secondValue = displayValue;
-    display.innerText = operate(operator, firstValue, secondValue);
+    display.innerText = operate(operator, sum, secondValue);
     upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
 })
 
