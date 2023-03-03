@@ -35,6 +35,7 @@ function clears() {
     sum = undefined;
     display.innerText = '';
     upperDisplay.innerText = '';
+    sumDisplay.innerText = '';
 
 }
 
@@ -47,6 +48,7 @@ let sum;
 
 const main = document.getElementById('main');
 const upperDisplay = document.getElementById('upper-display');
+const sumDisplay = document.getElementById('sum-display');
 const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.num');
 const math = document.querySelectorAll('.math');
@@ -74,8 +76,9 @@ buttons.forEach(numberButton => {
 
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
+        if(display.innerText === '') return;
         const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
-        console.log(runningCalc);
+        const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         prevOperator = runningCalc[runningCalc.length-1];
         if (isNaN(firstValue)) {
             firstValue = displayValue;
@@ -83,9 +86,14 @@ math.forEach(operatorButton => {
         } else {
             secondValue = displayValue;
             sum = operate(prevOperator, sum, secondValue);
+            sumDisplay.innerText = sum;
         }
         display.innerText = '';
-        upperDisplay.innerText += (upperDisplay.childNodes !== true) ? displayValue + ' ' + e.target.innerText:secondValue + ' ' + e.target.innerText ;
+        if(removeEqual[0] !== '='){
+        upperDisplay.innerText += (upperDisplay.childNodes !== true) ? displayValue + ' ' + e.target.innerText:secondValue + ' ' + e.target.innerText;
+        } else {
+            upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + e.target.innerText;
+        }
     })
 
 });
