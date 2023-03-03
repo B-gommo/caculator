@@ -16,13 +16,13 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator === '+') {
-        return sum = add(a, b);
+        return add(a, b);
     } else if (operator === '-') {
-        return sum = subtract(a, b);
+        return subtract(a, b);
     } else if (operator === '*') {
-        return sum = multiply(a, b);
+        return multiply(a, b);
     } else if (operator === '/') {
-        return sum = divide(a, b);
+        return divide(a, b);
     }
 }
 
@@ -38,6 +38,7 @@ function clears() {
 }
 
 let operator;
+let prevOperator;
 let displayValue;
 let firstValue;
 let secondValue;
@@ -72,12 +73,13 @@ buttons.forEach(numberButton => {
 
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
+        const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
+        console.log(runningCalc);
+        prevOperator = runningCalc[runningCalc.length-1];
         if (isNaN(firstValue)) {
             firstValue = displayValue;
         } else {
             secondValue = displayValue;
-            sum = operate(operator, firstValue, secondValue);
-            firstValue = sum;
         }
         display.innerText = '';
         upperDisplay.innerText += (upperDisplay.childNodes !== true) ? displayValue + ' ' + e.target.innerText:secondValue + ' ' + e.target.innerText ;
