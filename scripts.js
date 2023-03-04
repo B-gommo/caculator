@@ -16,14 +16,15 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator === '+') {
-        return add(a, b);
+        return add(a, b).toFixed(4);
     } else if (operator === '-') {
-        return subtract(a, b);
+        return subtract(a, b).toFixed(4);
     } else if (operator === '*') {
-        return multiply(a, b);
+        return multiply(a, b).toFixed(4);
     } else if (operator === '/') {
-        return divide(a, b);
+        return divide(a, b).toFixed(4);
     }
+
 }
 
 function clears() {
@@ -50,6 +51,7 @@ const upperDisplay = document.getElementById('upper-display');
 const sumDisplay = document.getElementById('sum-display');
 const display = document.getElementById('display');
 const numberButtons = document.querySelectorAll('.num');
+const decimalPoint = document.getElementById('decimal');
 const math = document.querySelectorAll('.math');
 const addition = document.getElementById('addition');
 const subtraction = document.getElementById('subtraction');
@@ -71,6 +73,16 @@ numberButtons.forEach(numberButton => {
         displayValue = display.innerText;
     })
 }); 
+
+decimalPoint.addEventListener('click', function(e) {
+    const hasDecimal = display.innerText.replace(/[^.]/g, '');
+    if(hasDecimal[0] !== '.'){
+        display.innerText += decimalPoint.innerText;
+        displayValue = display.innerText;
+    } else {
+        return;
+    }   
+})
 
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
