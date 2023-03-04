@@ -36,7 +36,6 @@ function clears() {
     display.innerText = '';
     upperDisplay.innerText = '';
     sumDisplay.innerText = '';
-
 }
 
 let operator;
@@ -50,7 +49,7 @@ const main = document.getElementById('main');
 const upperDisplay = document.getElementById('upper-display');
 const sumDisplay = document.getElementById('sum-display');
 const display = document.getElementById('display');
-const buttons = document.querySelectorAll('.num');
+const numberButtons = document.querySelectorAll('.num');
 const math = document.querySelectorAll('.math');
 const addition = document.getElementById('addition');
 const subtraction = document.getElementById('subtraction');
@@ -66,13 +65,12 @@ division.onclick = () => operator = '/';
 clear.onclick = () => clears();
 
 
-buttons.forEach(numberButton => {
+numberButtons.forEach(numberButton => {
     numberButton.addEventListener('click', function (e) {
         display.innerText += numberButton.innerText;
         displayValue = display.innerText;
     })
-
-});
+}); 
 
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
@@ -99,14 +97,18 @@ math.forEach(operatorButton => {
             upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
         }
     })
-
 });
 
 equals.addEventListener('click', function (e) {
-    secondValue = displayValue;
-    display.innerText = operate(operator, sum, secondValue);
-    upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
-    sumDisplay.innerText = '';
+    const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
+    if(removeEqual[0] !== '='){
+        secondValue = displayValue;
+        display.innerText = operate(operator, sum, secondValue);
+        upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+        sumDisplay.innerText = '';
+        } else {
+            return;
+        }
 })
 
 
