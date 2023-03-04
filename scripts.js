@@ -28,7 +28,7 @@ function operate(operator, a, b) {
             })
             return "Are you trying to break me? You can't devide by zero friend."
         } else {
-        return Number.isInteger(divide(a, b)) ? divide(a, b) : divide(a, b).toFixed(4);
+            return Number.isInteger(divide(a, b)) ? divide(a, b) : divide(a, b).toFixed(4);
         }
     }
 }
@@ -82,28 +82,28 @@ numberButtons.forEach(numberButton => {
         display.innerText += numberButton.innerText;
         displayValue = display.innerText;
     })
-}); 
+});
 
-decimalPoint.addEventListener('click', function(e) {
+decimalPoint.addEventListener('click', function (e) {
     const hasDecimal = display.innerText.replace(/[^.]/g, '');
-    if(hasDecimal[0] !== '.'){
+    if (hasDecimal[0] !== '.') {
         display.innerText += decimalPoint.innerText;
         displayValue = display.innerText;
     } else {
         return;
-    }   
+    }
 })
 
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
-        if(display.innerText === '') {
-            sumDisplay.innerText = sum + operator;
+        if (display.innerText === '') {
+            sumDisplay.innerText = operator;
             prevOperator = e.target.innerText;
             return;
         }
         const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
-        prevOperator = runningCalc[runningCalc.length-1];
+        prevOperator = runningCalc[runningCalc.length - 1];
         if (isNaN(firstValue)) {
             firstValue = displayValue;
             sum = displayValue;
@@ -113,8 +113,8 @@ math.forEach(operatorButton => {
             sumDisplay.innerText = sum + operator;
         }
         display.innerText = '';
-        if(removeEqual[0] !== '='){
-        upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
+        if (removeEqual[0] !== '=') {
+            upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
         } else {
             upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
         }
@@ -122,15 +122,24 @@ math.forEach(operatorButton => {
 });
 
 equals.addEventListener('click', function (e) {
+    if (upperDisplay.innerText === '') {
+        return;
+    }
     const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
-    if(removeEqual[0] !== '='){
-        secondValue = displayValue;
-        display.innerText = operate(operator, sum, secondValue);
-        upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
-        sumDisplay.innerText = '';
+    if (removeEqual[0] !== '=') {
+        if (display.innerText === '') {
+            display.innerText = sum;
+            sumDisplay.innerText = '';
+            upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + '=';
         } else {
-            return;
+            secondValue = displayValue;
+            display.innerText = operate(operator, sum, secondValue);
+            upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+            sumDisplay.innerText = '';
         }
+    } else {
+        return;
+    }
 })
 
 
