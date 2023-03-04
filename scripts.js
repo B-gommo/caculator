@@ -22,7 +22,14 @@ function operate(operator, a, b) {
     } else if (operator === '*') {
         return Number.isInteger(multiply(a, b)) ? multiply(a, b) : multiply(a, b).toFixed(4);
     } else if (operator === '/') {
+        if (b === '0') {
+            buttons.forEach(button => {
+                button.disabled = true;
+            })
+            return "Are you trying to break me? You can't devide by zero friend."
+        } else {
         return Number.isInteger(divide(a, b)) ? divide(a, b) : divide(a, b).toFixed(4);
+        }
     }
 }
 
@@ -36,6 +43,9 @@ function clears() {
     display.innerText = '';
     upperDisplay.innerText = '';
     sumDisplay.innerText = '';
+    buttons.forEach(button => {
+        button.disabled = false;
+    })
 }
 
 let operator;
@@ -49,6 +59,7 @@ const main = document.getElementById('main');
 const upperDisplay = document.getElementById('upper-display');
 const sumDisplay = document.getElementById('sum-display');
 const display = document.getElementById('display');
+const buttons = document.querySelectorAll('.disable');
 const numberButtons = document.querySelectorAll('.num');
 const decimalPoint = document.getElementById('decimal');
 const math = document.querySelectorAll('.math');
