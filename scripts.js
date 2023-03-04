@@ -16,15 +16,14 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator === '+') {
-        return add(a, b).toFixed(4);
+        return Number.isInteger(add(a, b)) ? add(a, b) : add(a, b).toFixed(4);
     } else if (operator === '-') {
-        return subtract(a, b).toFixed(4);
+        return Number.isInteger(subtract(a, b)) ? subtract(a, b) : subtract(a, b).toFixed(4);
     } else if (operator === '*') {
-        return multiply(a, b).toFixed(4);
+        return Number.isInteger(multiply(a, b)) ? multiply(a, b) : multiply(a, b).toFixed(4);
     } else if (operator === '/') {
-        return divide(a, b).toFixed(4);
+        return Number.isInteger(divide(a, b)) ? divide(a, b) : divide(a, b).toFixed(4);
     }
-
 }
 
 function clears() {
