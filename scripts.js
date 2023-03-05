@@ -102,8 +102,13 @@ numberButtons.forEach(numberButton => {
 decimalPoint.addEventListener('click', function (e) {
     const hasDecimal = display.innerText.replace(/[^.]/g, '');
     if (hasDecimal[0] !== '.') {
-        display.innerText += decimalPoint.innerText;
-        displayValue = display.innerText;
+        if (display.innerText === '') {
+            display.innerText = 0 + decimalPoint.innerText;
+            displayValue = display.innerText;
+        } else {
+            display.innerText += decimalPoint.innerText;
+            displayValue = display.innerText;
+        }
     } else {
         return;
     }
