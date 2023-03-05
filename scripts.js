@@ -164,9 +164,9 @@ math.forEach(operatorButton => {
                 display.innerText = '';
             }
         }
-        const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
+        const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '').replace(/[.]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
-        if (runningCalc.length === 1 || runningCalc.includes('.') && runningCalc.length === 2) {
+        if (runningCalc.length === 1) {
             console.log('1st running calc return');
             prevOperator = runningCalc[runningCalc.length - 1];
             return;
