@@ -104,26 +104,74 @@ math.forEach(operatorButton => {
         }*/
         if (prevButton === undefined) {
             console.log('if');
-            prevButton = e.target;
-        } else if (e.target === prevButton) {     /// Eureka!! Need to pop code in to construct upper display and run operate with the correct operator
-            console.log('else if');               /// base this off if the operator button is the same or different from previous.
+            if (display.innerText === '') {
+                console.log('if return');
+                return;
+            } else {
+                console.log('if - display not empty and prev button not defined')
+                prevButton = e.target;
+                firstValue = displayValue;
+                upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
+                display.innerText = '';
+            }
+
+        } else if (e.target === prevButton) {
+            if (display.innerText === '') {
+                console.log(' prev operator the same and display empty');
+                return;
+            } else {
+                console.log('else if - current operator not changed');
+                secondValue = displayValue;
+                upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
+                display.innerText = '';
+            }
+
+
+
         } else {
             console.log('else');
-            prevButton = e.target;
+            if (display.innerText === '') {
+                console.log('else - when display empty');
+                prevButton = e.target;
+                upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
+                return;
+            } else {
+                console.log('else - when display NOT empty');
+                secondValue = displayValue;
+                prevButton = e.target;
+                upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
+                display.innerText = '';
+            }
         }
-        /*const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
+        const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
-        prevOperator = runningCalc[runningCalc.innerText.length-1];
-        sum = operate(prevOperator, sum, secondValue);
-        sumDisplay.innerText = sum + operator;
-        
+        if (runningCalc.length === 1) {
+            console.log('1st running calc return');
+            prevOperator = runningCalc[runningCalc.length - 1];
+            return;
+        } else {
+            if (sum === undefined) {
+                console.log('Additional running calc return - sum undefined');
+                prevOperator = runningCalc[runningCalc.length - 2];
+                sum = operate(prevOperator, firstValue, secondValue);
+                sumDisplay.innerText = sum
+            } else {
+                console.log('Additional running calc sum defined');
+                prevOperator = runningCalc[runningCalc.length - 2];
+                sum = operate(prevOperator, sum, secondValue);
+                sumDisplay.innerText = sum
+            }
 
-        display.innerText = '';
+        }
+
+
+
+        /*display.innerText = '';
         if (removeEqual[0] !== '=') {
             upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
         } else {
             upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
-        }*/
+        } */
     })
 });
 
@@ -131,18 +179,32 @@ equals.addEventListener('click', function (e) {
     if (upperDisplay.innerText === '') {
         return;
     }
+    prevButton = e.target;
     const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
     if (removeEqual[0] !== '=') {
         if (display.innerText === '') {
-            display.innerText = sum;
+            console.log('here');
             sumDisplay.innerText = '';
             upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + '=';
         } else {
+            console.log('now here');
+            if (sum === undefined) {
+                console.log('now here 1');
+                secondValue = displayValue;
+                sumDisplay.innerText = operate(operator, firstValue, secondValue);
+                upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
+                upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+                display.innerText = ''; 
+            } else {
+                console.log('now here 2');
             secondValue = displayValue;
-            display.innerText = operate(operator, sum, secondValue);
+            sumDisplay.innerText = operate(operator, sum, secondValue);
+            sum = sumDisplay.innerText;
             upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
             upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
-            sumDisplay.innerText = '';
+            display.innerText = '';
+            }
+            
         }
     } else {
         return;
