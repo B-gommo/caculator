@@ -134,11 +134,6 @@ math.forEach(operatorButton => {
         } else if (e.target === prevButton) {
             if (display.innerText === '') {
                 console.log(' prev operator the same and display empty');
-                if (sum === undefined) {
-                    sumDisplay.innerText = firstValue + ' ' + operator;
-                } else {
-                    sumDisplay.innerText = sum + ' ' + operator;
-                }
                 return;
             } else {
                 console.log('else if - current operator not changed');
@@ -156,7 +151,7 @@ math.forEach(operatorButton => {
                 prevButton = e.target;
                 upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
                 if (sum === undefined) {
-                    sumDisplay.innerText = firstValue + ' ' + operator;
+                    return;
                 } else {
                     sumDisplay.innerText = sum + ' ' + operator;
                 }
