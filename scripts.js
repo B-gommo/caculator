@@ -80,8 +80,22 @@ clear.onclick = () => clears();
 
 numberButtons.forEach(numberButton => {
     numberButton.addEventListener('click', function (e) {
-        display.innerText += numberButton.innerText;
-        displayValue = display.innerText;
+        const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
+        if (removeEqual[0] !== '=') {
+            display.innerText += numberButton.innerText;
+            displayValue = display.innerText;
+        } else {
+            display.innerText += numberButton.innerText;
+            displayValue = display.innerText;
+            operator = undefined;
+            prevOperator = undefined;
+            prevButton = undefined;
+            firstValue = undefined;
+            secondValue = undefined;
+            sum = undefined;
+            upperDisplay.innerText = '';
+            sumDisplay.innerText = '';
+        }
     })
 });
 
@@ -194,17 +208,17 @@ equals.addEventListener('click', function (e) {
                 sumDisplay.innerText = operate(operator, firstValue, secondValue);
                 upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
                 upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
-                display.innerText = ''; 
+                display.innerText = '';
             } else {
                 console.log('now here 2');
-            secondValue = displayValue;
-            sumDisplay.innerText = operate(operator, sum, secondValue);
-            sum = sumDisplay.innerText;
-            upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
-            upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
-            display.innerText = '';
+                secondValue = displayValue;
+                sumDisplay.innerText = operate(operator, sum, secondValue);
+                sum = sumDisplay.innerText;
+                upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
+                upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+                display.innerText = '';
             }
-            
+
         }
     } else {
         return;
