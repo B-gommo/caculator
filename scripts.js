@@ -16,11 +16,11 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator === '+') {
-        return Number.isInteger(add(a, b)) ? add(a, b) : add(a, b).toFixed(4);
+        return Number.isInteger(add(a, b)) ? add(a, b) : Number(add(a, b).toFixed(4));
     } else if (operator === '-') {
-        return Number.isInteger(subtract(a, b)) ? subtract(a, b) : subtract(a, b).toFixed(4);
+        return Number.isInteger(subtract(a, b)) ? subtract(a, b) : Number(subtract(a, b).toFixed(4));
     } else if (operator === '*') {
-        return Number.isInteger(multiply(a, b)) ? multiply(a, b) : multiply(a, b).toFixed(4);
+        return Number.isInteger(multiply(a, b)) ? multiply(a, b) : Number(multiply(a, b).toFixed(4));
     } else if (operator === '/') {
         if (b === '0') {
             buttons.forEach(button => {
@@ -28,7 +28,7 @@ function operate(operator, a, b) {
             })
             return "Are you trying to break me? You can't devide by zero friend."
         } else {
-            return Number.isInteger(divide(a, b)) ? divide(a, b) : divide(a, b).toFixed(4);
+            return Number.isInteger(divide(a, b)) ? divide(a, b) : Number(divide(a, b).toFixed(4));
         }
     }
 }
@@ -101,14 +101,29 @@ numberButtons.forEach(numberButton => {
 
 decimalPoint.addEventListener('click', function (e) {
     const hasDecimal = display.innerText.replace(/[^.]/g, '');
-    if (hasDecimal[0] !== '.') {
+    const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
+    if (hasDecimal[0] !== '.' && removeEqual[0] !== '=') {
         if (display.innerText === '') {
             display.innerText = 0 + decimalPoint.innerText;
             displayValue = display.innerText;
+            console.log('you are in the top');
         } else {
             display.innerText += decimalPoint.innerText;
             displayValue = display.innerText;
+            console.log('you are in the middle');
         }
+    } else if (hasDecimal[0] !== '.' && removeEqual[0] === '=') {
+        display.innerText = 0 + decimalPoint.innerText;
+        displayValue = display.innerText;
+        operator = undefined;
+        prevOperator = undefined;
+        prevButton = undefined;
+        firstValue = undefined;
+        secondValue = undefined;
+        sum = undefined;
+        upperDisplay.innerText = '';
+        sumDisplay.innerText = '';
+        console.log('you are in the bottom');
     } else {
         return;
     }
