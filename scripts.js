@@ -134,7 +134,11 @@ math.forEach(operatorButton => {
         } else if (e.target === prevButton) {
             if (display.innerText === '') {
                 console.log(' prev operator the same and display empty');
-                sumDisplay.innerText = sum + ' ' + operator;
+                if (sum === undefined) {
+                    sumDisplay.innerText = firstValue + ' ' + operator;
+                } else {
+                    sumDisplay.innerText = sum + ' ' + operator;
+                }
                 return;
             } else {
                 console.log('else if - current operator not changed');
@@ -151,7 +155,11 @@ math.forEach(operatorButton => {
                 console.log('else - when display empty');
                 prevButton = e.target;
                 upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
-                sumDisplay.innerText = sum + ' ' + operator;
+                if (sum === undefined) {
+                    sumDisplay.innerText = firstValue + ' ' + operator;
+                } else {
+                    sumDisplay.innerText = sum + ' ' + operator;
+                }
                 return;
             } else {
                 console.log('else - when display NOT empty');
@@ -192,7 +200,11 @@ equals.addEventListener('click', function (e) {
     if (removeEqual[0] !== '=') {
         if (display.innerText === '') {
             console.log('here');
-            sumDisplay.innerText = sum;
+            if (sum === undefined) {
+                sumDisplay.innerText = firstValue;
+            } else {
+                sumDisplay.innerText = sum;
+            }
             upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + '=';
         } else {
             console.log('now here');
