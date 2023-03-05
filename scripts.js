@@ -113,9 +113,6 @@ let prevButton;
 
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
-        /*if (display.innerText === '') {
-            return;
-        }*/
         if (prevButton === undefined) {
             console.log('if');
             if (display.innerText === '') {
@@ -132,6 +129,7 @@ math.forEach(operatorButton => {
         } else if (e.target === prevButton) {
             if (display.innerText === '') {
                 console.log(' prev operator the same and display empty');
+                sumDisplay.innerText = sum + ' ' + operator;
                 return;
             } else {
                 console.log('else if - current operator not changed');
@@ -148,6 +146,7 @@ math.forEach(operatorButton => {
                 console.log('else - when display empty');
                 prevButton = e.target;
                 upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
+                sumDisplay.innerText = sum + ' ' + operator;
                 return;
             } else {
                 console.log('else - when display NOT empty');
@@ -168,24 +167,14 @@ math.forEach(operatorButton => {
                 console.log('Additional running calc return - sum undefined');
                 prevOperator = runningCalc[runningCalc.length - 2];
                 sum = operate(prevOperator, firstValue, secondValue);
-                sumDisplay.innerText = sum
+                sumDisplay.innerText = sum + ' ' + operator;
             } else {
                 console.log('Additional running calc sum defined');
                 prevOperator = runningCalc[runningCalc.length - 2];
                 sum = operate(prevOperator, sum, secondValue);
-                sumDisplay.innerText = sum
+                sumDisplay.innerText = sum + ' ' + operator;
             }
-
         }
-
-
-
-        /*display.innerText = '';
-        if (removeEqual[0] !== '=') {
-            upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
-        } else {
-            upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
-        } */
     })
 });
 
@@ -198,7 +187,7 @@ equals.addEventListener('click', function (e) {
     if (removeEqual[0] !== '=') {
         if (display.innerText === '') {
             console.log('here');
-            sumDisplay.innerText = '';
+            sumDisplay.innerText = sum;
             upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + '=';
         } else {
             console.log('now here');
@@ -206,6 +195,7 @@ equals.addEventListener('click', function (e) {
                 console.log('now here 1');
                 secondValue = displayValue;
                 sumDisplay.innerText = operate(operator, firstValue, secondValue);
+                sum = sumDisplay.innerText;
                 upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
                 upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
                 display.innerText = '';
@@ -218,7 +208,6 @@ equals.addEventListener('click', function (e) {
                 upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
                 display.innerText = '';
             }
-
         }
     } else {
         return;
