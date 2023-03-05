@@ -166,7 +166,7 @@ math.forEach(operatorButton => {
         }
         const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
-        if (runningCalc.length === 1) {
+        if (runningCalc.length === 1 || runningCalc.includes('.') && runningCalc.length === 2) {
             console.log('1st running calc return');
             prevOperator = runningCalc[runningCalc.length - 1];
             return;
