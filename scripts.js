@@ -69,6 +69,7 @@ const subtraction = document.getElementById('subtraction');
 const multiplication = document.getElementById('multiplication');
 const division = document.getElementById('division');
 const clear = document.getElementById('clear');
+const clearEntry = document.getElementById('clear-entry');
 const equals = document.getElementById('equals');
 
 addition.onclick = () => operator = '+';
@@ -76,6 +77,7 @@ subtraction.onclick = () => operator = '-';
 multiplication.onclick = () => operator = '*';
 division.onclick = () => operator = '/';
 clear.onclick = () => clears();
+clearEntry.onclick = () => display.innerText = '';
 
 
 numberButtons.forEach(numberButton => {
