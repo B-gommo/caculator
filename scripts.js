@@ -26,7 +26,7 @@ function operate(operator, a, b) {
             buttons.forEach(button => {
                 button.disabled = true;
             })
-            return "Are you trying to break me? You can't devide by zero friend."
+            return "Are you trying to break me?"
         } else {
             return Number.isInteger(divide(a, b)) ? divide(a, b) : Number(divide(a, b).toFixed(4));
         }

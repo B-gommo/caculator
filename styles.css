@@ -3,21 +3,32 @@
     margin: 0;
 }
 
+:root {
+    --body: rgb(228, 223, 210);
+    --calculator: black;
+    --output: rgb(81, 109, 74);
+    --operators: rgb(202, 130, 47);
+    --numbers: rgb(65, 88, 150);
+    --clearButtons: rgb(163, 50, 50);
+    --equals: green;
+    --misc: gray;
+}
+
 #main {
     display: flex;
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background-color: rgb(228, 223, 210);
+    background-color: var(--body);
 }
 
 #calculator {
-    background-color: black;
+    background-color: var(--calculator);
     display: flex;
     flex-direction: column;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 5px 5px 6px 0px rgba(0, 0, 0, 0.15), 2px 2px 3px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 5px 5px 6px 0px rgba(0, 0, 0, 0.5), 2px 2px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
 #output {
@@ -26,7 +37,7 @@
     width: 320px;
     height: 111px;
     overflow: hidden;
-    background-color: rgb(81, 109, 74);
+    background-color: var(--output);
     margin-bottom: 15px;
     border-radius: 5px;
     padding: 3px 3px;
@@ -76,21 +87,21 @@ button {
 }
 
 .math {
-    background-color: rgb(202, 130, 47);
+    background-color: var(--operators);
 }
 
 .num {
-    background-color: rgb(65, 88, 150);
+    background-color: var(--numbers);
 }
 
 .clear__buttons {
-    background-color: rgb(163, 50, 50);
+    background-color: var(--clearButtons);
 }
 
 #equals {
-    background-color: green;
+    background-color: var(--equals);
 }
 
 #decimal {
-    background-color: gray;
+    background-color: var(--misc);
 }
