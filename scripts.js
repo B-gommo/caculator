@@ -36,6 +36,9 @@ function operate(operator, a, b) {
 function clears() {
     operator = undefined;
     prevOperator = undefined;
+    if (prevButton !== undefined) {
+        prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+    }
     prevButton = undefined;
     displayValue = undefined;
     firstValue = undefined;
@@ -145,11 +148,13 @@ math.forEach(operatorButton => {
                 firstValue = displayValue;
                 upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
                 display.innerText = '';
+                e.target.style.backgroundColor = 'pink';
             }
 
         } else if (e.target === prevButton) {
             if (display.innerText === '') {
                 console.log(' prev operator the same and display empty');
+                e.target.style.backgroundColor = "pink";
                 return;
             } else {
                 console.log('else if - current operator not changed');
@@ -164,7 +169,9 @@ math.forEach(operatorButton => {
             console.log('else');
             if (display.innerText === '') {
                 console.log('else - when display empty');
+                prevButton.style.backgroundColor = "rgb(202, 130, 47)";
                 prevButton = e.target;
+                e.target.style.backgroundColor = "pink";
                 upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
                 if (sum === undefined) {
                     return;
@@ -175,7 +182,9 @@ math.forEach(operatorButton => {
             } else {
                 console.log('else - when display NOT empty');
                 secondValue = displayValue;
+                prevButton.style.backgroundColor = "rgb(202, 130, 47)";
                 prevButton = e.target;
+                e.target.style.backgroundColor = "pink";
                 upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
                 display.innerText = '';
             }
@@ -191,12 +200,12 @@ math.forEach(operatorButton => {
                 console.log('Additional running calc return - sum undefined');
                 prevOperator = runningCalc[runningCalc.length - 2];
                 sum = operate(prevOperator, firstValue, secondValue);
-                sumDisplay.innerText = sum + ' ' + operator;
+                sumDisplay.innerText = sum;
             } else {
                 console.log('Additional running calc sum defined');
                 prevOperator = runningCalc[runningCalc.length - 2];
                 sum = operate(prevOperator, sum, secondValue);
-                sumDisplay.innerText = sum + ' ' + operator;
+                sumDisplay.innerText = sum;
             }
         }
     })
@@ -206,7 +215,7 @@ equals.addEventListener('click', function (e) {
     if (upperDisplay.innerText === '') {
         return;
     }
-    prevButton = e.target;
+    prevButton.style.backgroundColor = "rgb(202, 130, 47)";
     const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
     if (removeEqual[0] !== '=') {
         if (display.innerText === '') {
