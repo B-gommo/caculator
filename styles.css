@@ -43,6 +43,14 @@
     padding: 3px 3px;
 }
 
+#buttons {
+    display: grid;
+    width: 320px;
+    height: 420px;
+    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+    gap: 2px 2px;
+}
+
 #upper-display {
     align-self: start;
     overflow: hidden;
@@ -84,6 +92,7 @@ button {
     border: none;
     border-radius: none;
     font-size: 2rem;
+    padding: 0;
 }
 
 .math {
