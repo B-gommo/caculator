@@ -155,6 +155,12 @@ math.forEach(operatorButton => {
             if (display.innerText === '') {
                 console.log(' prev operator the same and display empty');
                 e.target.style.backgroundColor = "pink";
+                upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
+                if (sum === undefined) {
+                    return;
+                } else {
+                    sumDisplay.innerText = sum;
+                }
                 return;
             } else {
                 console.log('else if - current operator not changed');
@@ -176,7 +182,7 @@ math.forEach(operatorButton => {
                 if (sum === undefined) {
                     return;
                 } else {
-                    sumDisplay.innerText = sum + ' ' + operator;
+                    sumDisplay.innerText = sum;
                 }
                 return;
             } else {
