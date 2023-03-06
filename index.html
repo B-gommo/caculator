@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,30 +8,40 @@
     <script src="./scripts.js" defer></script>
     <title>Calculator</title>
 </head>
+
 <body>
     <div id="main">
-        <p id="upper-display" style="height: 30px; background-color: rgba(255, 127, 80, 0.349);"></p>
-        <p id="sum-display" style="height: 30px; background-color: rgba(0, 0, 255, 0.288);"></p>
-        <p id="display" style="height: 30px; background-color: rgba(0, 128, 0, 0.247);"></p>
-        <button class="num disable">0</button>
-        <button class="num disable">1</button>
-        <button class="num disable">2</button>
-        <button class="num disable">3</button>
-        <button class="num disable">4</button>
-        <button class="num disable">5</button>
-        <button class="num disable">6</button>
-        <button class="num disable">7</button>
-        <button class="num disable">8</button>
-        <button class="num disable">9</button>
-        <button id="decimal" class="disable">.</button>
-        <button id="addition" class="math disable">+</button>
-        <button id="subtraction" class="math disable">-</button>
-        <button id="multiplication" class="math disable">*</button>
-        <button id="division" class="math disable">/</button>
-        <button id="clear">C</button>
-        <button id="clear-entry">CE</button>
-        <button id="equals" class="disable">=</button>
+        <div id='calculator'>
+            <div id="output">
+                <p id="upper-display" class="displays"></p>
+                <p id="sum-display" class="displays"></p>
+                <p id="display" class="displays"></p>
+            </div>
+            <div id="buttons">
+                <button id="percent"></button>
+                <button id="clear-entry" class="clear__buttons">CE</button>
+                <button id="clear" class="clear__buttons">C</button>
+                <button id="addition" class="math disable">+</button>
+                <button class="num disable">7</button>
+                <button class="num disable">8</button>
+                <button class="num disable">9</button>
+                <button id="subtraction" class="math disable">-</button>
+                <button class="num disable">4</button>
+                <button class="num disable">5</button>
+                <button class="num disable">6</button>
+                <button id="multiplication" class="math disable">*</button>
+                <button class="num disable">1</button>
+                <button class="num disable">2</button>
+                <button class="num disable">3</button>
+                <button id="division" class="math disable">/</button>
+                <button id="negative-toggle"></button>
+                <button class="num disable">0</button>
+                <button id="decimal" class="disable">.</button>
+                <button id="equals" class="disable">=</button>
+            </div>
+        </div>
     </div>
-    
+
 </body>
+
 </html>

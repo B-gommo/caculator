@@ -56,7 +56,6 @@ let firstValue;
 let secondValue;
 let sum;
 
-const main = document.getElementById('main');
 const upperDisplay = document.getElementById('upper-display');
 const sumDisplay = document.getElementById('sum-display');
 const display = document.getElementById('display');

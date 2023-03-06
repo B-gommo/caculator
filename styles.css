@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#main {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(228, 223, 210);
+}
+
+#calculator {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 6px 0px rgba(0, 0, 0, 0.15), 2px 2px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+#output {
+    display: grid;
+    justify-items: end;
+    width: 320px;
+    height: 111px;
+    overflow: hidden;
+    background-color: rgb(81, 109, 74);
+    margin-bottom: 15px;
+    border-radius: 5px;
+    padding: 3px 3px;
+}
+
+#upper-display {
+    align-self: start;
+    overflow: hidden;
+    font-size: 1rem;
+    white-space: nowrap;
+
+}
+
+#sum-display {
+    align-self: middle;
+    overflow: hidden;
+    font-size: 1rem;
+    white-space: nowrap;
+
+}
+
+#display {
+    align-self: end;
+    overflow: hidden;
+    font-size: 2rem;
+    white-space: nowrap; 
+
+}
+
+#upper-display, #sum-display, #display {
+    margin: 0;
+    height: 35px;
+}
+
+#buttons {
+    display: grid;
+    width: 320px;
+    height: 420px;
+    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+    gap: 2px 2px;
+}
+
+button {
+    border: none;
+    border-radius: none;
+    font-size: 2rem;
+}
+
+.math {
+    background-color: rgb(202, 130, 47);
+}
+
+.num {
+    background-color: rgb(65, 88, 150);
+}
+
+.clear__buttons {
+    background-color: rgb(163, 50, 50);
+}
+
+#equals {
+    background-color: green;
+}
+
+#decimal {
+    background-color: gray;
+}
