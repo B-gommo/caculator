@@ -111,6 +111,6 @@ button {
     background-color: var(--equals);
 }
 
-#decimal {
+.modify {
     background-color: var(--misc);
 }
