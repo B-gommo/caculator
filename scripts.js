@@ -109,7 +109,9 @@ numberButtons.forEach(numberButton => {
 let negActive = false;
 
 negativeToggle.addEventListener('click', function(e) {
-    if (display.innerText[0] !== '-') {
+    if (display.innerText === '') {
+        return;
+    } else if (display.innerText[0] !== '-') {
     display.innerText = '-' + display.innerText;
     displayValue = display.innerText;
     negActive = true;
