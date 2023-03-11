@@ -47,6 +47,7 @@ function clears() {
     display.innerText = '';
     upperDisplay.innerText = '';
     sumDisplay.innerText = '';
+    negActive = false;
     buttons.forEach(button => {
         button.disabled = false;
     })
@@ -80,8 +81,10 @@ subtraction.onclick = () => operator = '-';
 multiplication.onclick = () => operator = '*';
 division.onclick = () => operator = '/';
 clear.onclick = () => clears();
-clearEntry.onclick = () => display.innerText = '';
-
+clearEntry.onclick = () => {
+    display.innerText = '';
+    negActive = false;
+};
 
 numberButtons.forEach(numberButton => {
     numberButton.addEventListener('click', function (e) {
