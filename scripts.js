@@ -73,6 +73,7 @@ const division = document.getElementById('division');
 const clear = document.getElementById('clear');
 const clearEntry = document.getElementById('clear-entry');
 const equals = document.getElementById('equals');
+const negativeToggle = document.getElementById('negative-toggle');
 
 addition.onclick = () => operator = '+';
 subtraction.onclick = () => operator = '-';
@@ -88,6 +89,7 @@ numberButtons.forEach(numberButton => {
         if (removeEqual[0] !== '=') {
             display.innerText += numberButton.innerText;
             displayValue = display.innerText;
+            console.log('num if');
         } else {
             display.innerText += numberButton.innerText;
             displayValue = display.innerText;
@@ -99,9 +101,28 @@ numberButtons.forEach(numberButton => {
             sum = undefined;
             upperDisplay.innerText = '';
             sumDisplay.innerText = '';
+            console.log('num else');
         }
     })
 });
+
+let negActive = false;
+
+negativeToggle.addEventListener('click', function(e) {
+    if (display.innerText[0] !== '-') {
+    display.innerText = '-' + display.innerText;
+    displayValue = display.innerText;
+    negActive = true;
+    } else {
+        let negStr = display.innerText;
+        negStr = negStr.substring(1);
+        display.innerText = negStr;
+        displayValue = negStr;
+        console.log('removing the negative');
+        console.log(negStr);
+        negActive = false;
+    }
+})
 
 decimalPoint.addEventListener('click', function (e) {
     const hasDecimal = display.innerText.replace(/[^.]/g, '');
@@ -197,19 +218,35 @@ math.forEach(operatorButton => {
         }
         const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '').replace(/[.]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
-        if (runningCalc.length === 1) {
-            console.log('1st running calc return');
+        console.log(runningCalc);
+        if (runningCalc.length === 1 && negActive === false) {
+            console.log('1st running calc return - neg false');
             prevOperator = runningCalc[runningCalc.length - 1];
             return;
-        } else {
+        } else if (runningCalc.length === 2 && negActive === true) {
+            console.log('2nd running calc return - Neg true');
+            prevOperator = runningCalc[runningCalc.length - 1];
+            negActive = false;
+            return;
+        }else {
             if (sum === undefined) {
                 console.log('Additional running calc return - sum undefined');
-                prevOperator = runningCalc[runningCalc.length - 2];
+                if (secondValue && secondValue[0] === '-') {
+                    prevOperator = runningCalc[runningCalc.length - 3];
+                    negActive = false;
+                } else {
+                    prevOperator = runningCalc[runningCalc.length - 2];
+                }
                 sum = operate(prevOperator, firstValue, secondValue);
                 sumDisplay.innerText = sum;
             } else {
                 console.log('Additional running calc sum defined');
-                prevOperator = runningCalc[runningCalc.length - 2];
+                if (secondValue[0] === '-') {
+                    prevOperator = runningCalc[runningCalc.length - 3];
+                    negActive = false;
+                } else {
+                    prevOperator = runningCalc[runningCalc.length - 2];
+                }
                 sum = operate(prevOperator, sum, secondValue);
                 sumDisplay.innerText = sum;
             }
