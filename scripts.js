@@ -22,8 +22,9 @@ function operate(operator, a, b) {
     } else if (operator === '*') {
         return Number.isInteger(multiply(a, b)) ? multiply(a, b) : Number(multiply(a, b).toFixed(4));
     } else if (operator === '/') {
-        if (b === '0') {
+        if (Number(b) === 0) {
             buttons.forEach(button => {
+                button.style.filter = 'grayscale(80%) blur(2px)';
                 button.disabled = true;
             })
             return "Are you trying to break me?"
@@ -53,6 +54,7 @@ function clears() {
     sumDisplay.innerText = '';
     negActive = false;
     buttons.forEach(button => {
+        button.style.filter = 'grayscale(0%) blur(0px)';
         button.disabled = false;
     })
 }
