@@ -258,7 +258,7 @@ math.forEach(operatorButton => {
                 display.innerText = '';
             }
         }
-        const runningCalc = upperDisplay.innerText.replace(/[^+-/\*]/g, '').replace(/[.]/g, '');
+        const runningCalc = upperDisplay.innerText.replace(/[^+-\/*]/g, '').replace(/[.]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         console.log(runningCalc);
         if (runningCalc.length === 1 && negActive === false) {

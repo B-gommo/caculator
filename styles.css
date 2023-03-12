@@ -24,9 +24,15 @@
     src: url('./fonts/Orbitron-VariableFont_wght.ttf');
 }
 
+h1, h2 {
+    font-family: 'orbitron';
+}
+
 #main {
     display: flex;
+    flex-direction: column;
     height: 100vh;
+    gap: 15px;
     justify-content: center;
     align-items: center;
     background-color: var(--body);
@@ -37,7 +43,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 15px;
     box-shadow: 5px 5px 6px 0px rgba(0, 0, 0, 0.5), 2px 2px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -50,16 +56,9 @@
     background-color: var(--output);
     margin-bottom: 15px;
     border-radius: 5px;
+    border: 3px rgb(2, 36, 2) solid;
     padding: 3px 3px;
     font-family: 'digital';
-}
-
-#buttons {
-    display: grid;
-    width: 320px;
-    height: 420px;
-    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
-    gap: 2px 2px;
 }
 
 #upper-display {
@@ -75,7 +74,7 @@
     overflow: hidden;
     font-size: 1.5rem;
     white-space: nowrap;
-
+    margin-top: -6px;
 }
 
 #display {
@@ -83,19 +82,27 @@
     overflow: hidden;
     font-size: 3rem;
     white-space: nowrap; 
-
+    margin-top: -6px;
 }
 
 #upper-display, #sum-display, #display {
-    margin: 0;
     height: 35px;
+}
+
+#buttons {
+    display: grid;
+    width: 320px;
+    height: 420px;
+    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+    gap: 5px 5px;
 }
 
 button {
     touch-action: manipulation;
     font-family: 'orbitron';
+    color: rgb(32, 32, 31);
     border: none;
-    border-radius: none;
+    border-radius: 5px;
     font-size: 2rem;
     padding: 0;
 }
