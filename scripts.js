@@ -33,6 +33,10 @@ function operate(operator, a, b) {
     }
 }
 
+function percent(a, b) {
+    return (Number(b) * Number(a)) / 100;
+}
+
 function clears() {
     operator = undefined;
     prevOperator = undefined;
@@ -71,6 +75,7 @@ const addition = document.getElementById('addition');
 const subtraction = document.getElementById('subtraction');
 const multiplication = document.getElementById('multiplication');
 const division = document.getElementById('division');
+const percentage = document.getElementById('percent');
 const clear = document.getElementById('clear');
 const clearEntry = document.getElementById('clear-entry');
 const equals = document.getElementById('equals');
@@ -85,6 +90,38 @@ clearEntry.onclick = () => {
     display.innerText = '';
     negActive = false;
 };
+percentage.onclick = () => {
+    if (display.innerText === '') {
+        console.log('percent return');
+        return;
+    } else if (firstValue !== undefined && secondValue === undefined) {
+        let b = display.innerText;
+        console.log('percent else if outer');
+        if (prevOperator === '*' || prevOperator === '/') {
+            display.innerHTML = display.innerText / 100;
+            displayValue = display.innerText;
+            console.log('percent top');
+        } else {
+        let percentResult = percent(firstValue, b);
+        display.innerText = percentResult;
+        displayValue = display.innerText;
+        console.log('percent bottom');
+        }
+    } else if (sum !== undefined && secondValue !== undefined) {
+        let b = display.innerText;
+        console.log('percent else if outer');
+        if (operator === '*' || operator === '/') {
+            display.innerHTML = display.innerText / 100;
+            displayValue = display.innerText;
+            console.log('percent bottom top');
+        } else {
+        let percentResult = percent(sum, b);
+        display.innerText = percentResult;
+        displayValue = display.innerText;
+        console.log('percent bottom bottom');
+        }
+    }
+}
 
 numberButtons.forEach(numberButton => {
     numberButton.addEventListener('click', function (e) {
