@@ -89,6 +89,7 @@
 }
 
 button {
+    touch-action: manipulation;
     border: none;
     border-radius: none;
     font-size: 2rem;
@@ -109,6 +110,10 @@ button {
 
 #equals {
     background-color: var(--equals);
+}
+
+#percent {
+    background-color: rgb(131, 84, 175);
 }
 
 .modify {
