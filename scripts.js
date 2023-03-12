@@ -24,7 +24,7 @@ function operate(operator, a, b) {
     } else if (operator === '/') {
         if (Number(b) === 0) {
             buttons.forEach(button => {
-                button.style.filter = 'grayscale(80%) blur(2px)';
+                button.classList.add('filter');
                 button.disabled = true;
             })
             return "Are you trying to break me?"
@@ -54,7 +54,7 @@ function clears() {
     sumDisplay.innerText = '';
     negActive = false;
     buttons.forEach(button => {
-        button.style.filter = 'grayscale(0%) blur(0px)';
+        button.classList.remove('filter');
         button.disabled = false;
     })
 }

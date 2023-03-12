@@ -107,6 +107,10 @@ button {
     padding: 0;
 }
 
+.filter {
+    filter: grayscale(80%) blur(2px);
+}
+
 .math {
     background-color: var(--operators);
 }
