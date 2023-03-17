@@ -78,11 +78,17 @@ const allButtons = document.querySelectorAll('button');
 
 allButtons.forEach(button => {
     button.addEventListener('click', function (e) {
-        console.log('help');
+        console.log('click');
         e = this;
         console.log(e);
         buttonActioned(e);
     })
+});
+
+document.addEventListener('keydown', function (e) {
+    console.log('keydown');45
+    console.log(e.key);
+    /*buttonActioned(e);*/
 });
 
 function buttonActioned(e) {
