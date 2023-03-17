@@ -65,6 +65,8 @@ let displayValue;
 let firstValue;
 let secondValue;
 let sum;
+let prevButton;
+let negActive = false;
 
 const upperDisplay = document.getElementById('upper-display');
 const sumDisplay = document.getElementById('sum-display');
@@ -98,12 +100,12 @@ percentage.onclick = () => {
     } else if (firstValue !== undefined && secondValue === undefined) {
         let b = display.innerText;
         if (prevOperator === '*' || prevOperator === '/') {
-            display.innerHTML = display.innerText / 100;
+            display.innerText = display.innerText / 100;
             displayValue = display.innerText;
         } else {
-        let percentResult = percent(firstValue, b);
-        display.innerText = percentResult;
-        displayValue = display.innerText;
+            let percentResult = percent(firstValue, b);
+            display.innerText = percentResult;
+            displayValue = display.innerText;
         }
     } else if (sum !== undefined && secondValue !== undefined) {
         let b = display.innerText;
@@ -111,9 +113,9 @@ percentage.onclick = () => {
             display.innerHTML = display.innerText / 100;
             displayValue = display.innerText;
         } else {
-        let percentResult = percent(sum, b);
-        display.innerText = percentResult;
-        displayValue = display.innerText;
+            let percentResult = percent(sum, b);
+            display.innerText = percentResult;
+            displayValue = display.innerText;
         }
     }
 }
@@ -139,15 +141,13 @@ numberButtons.forEach(numberButton => {
     })
 });
 
-let negActive = false;
-
-negativeToggle.addEventListener('click', function(e) {
+negativeToggle.addEventListener('click', function (e) {
     if (display.innerText === '') {
         return;
     } else if (display.innerText[0] !== '-') {
-    display.innerText = '-' + display.innerText;
-    displayValue = display.innerText;
-    negActive = true;
+        display.innerText = '-' + display.innerText;
+        displayValue = display.innerText;
+        negActive = true;
     } else {
         let negStr = display.innerText;
         negStr = negStr.substring(1);
@@ -184,8 +184,6 @@ decimalPoint.addEventListener('click', function (e) {
     }
 })
 
-let prevButton;
-
 math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
         if (prevButton === undefined) {
@@ -198,7 +196,6 @@ math.forEach(operatorButton => {
                 display.innerText = '';
                 e.target.style.backgroundColor = 'pink';
             }
-
         } else if (e.target === prevButton) {
             if (display.innerText === '') {
                 e.target.style.backgroundColor = "pink";
@@ -214,9 +211,6 @@ math.forEach(operatorButton => {
                 upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
                 display.innerText = '';
             }
-
-
-
         } else {
             if (display.innerText === '') {
                 prevButton.style.backgroundColor = "rgb(202, 130, 47)";
@@ -246,7 +240,7 @@ math.forEach(operatorButton => {
             prevOperator = runningCalc[runningCalc.length - 1];
             negActive = false;
             return;
-        }else {
+        } else {
             if (sum === undefined) {
                 if (secondValue && secondValue[0] === '-') {
                     prevOperator = runningCalc[runningCalc.length - 3];
