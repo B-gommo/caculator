@@ -16,11 +16,11 @@ function divide(a, b) {
 
 function operate(operator, a, b) {
     if (operator === '+') {
-        return Number.isInteger(add(a, b)) ? add(a, b) : Number(add(a, b).toFixed(4));
+        return Number.isInteger(add(a, b)) ? Number(add(a, b)) : Number(add(a, b).toFixed(4));
     } else if (operator === '-') {
-        return Number.isInteger(subtract(a, b)) ? subtract(a, b) : Number(subtract(a, b).toFixed(4));
+        return Number.isInteger(subtract(a, b)) ? Number(subtract(a, b)) : Number(subtract(a, b).toFixed(4));
     } else if (operator === '*') {
-        return Number.isInteger(multiply(a, b)) ? multiply(a, b) : Number(multiply(a, b).toFixed(4));
+        return Number.isInteger(multiply(a, b)) ? Number(multiply(a, b)) : Number(multiply(a, b).toFixed(4));
     } else if (operator === '/') {
         if (Number(b) === 0) {
             buttons.forEach(button => {
@@ -29,13 +29,13 @@ function operate(operator, a, b) {
             })
             return "Are you trying to break me?"
         } else {
-            return Number.isInteger(divide(a, b)) ? divide(a, b) : Number(divide(a, b).toFixed(4));
+            return Number.isInteger(divide(a, b)) ? Number(divide(a, b)) : Number(divide(a, b).toFixed(4));
         }
     }
 }
 
 function percent(a, b) {
-    return (Number(b) * Number(a)) / 100;
+    return Number.isInteger((Number(b) * Number(a)) / 100) ? Number((parseFloat(b) * parseFloat(a)) / 100) : Number((parseFloat(b) * parseFloat(a)) / 100).toFixed(4);
 }
 
 function clears() {
@@ -72,7 +72,7 @@ const upperDisplay = document.getElementById('upper-display');
 const sumDisplay = document.getElementById('sum-display');
 const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.disable');
-const numberButtons = document.querySelectorAll('.num');
+/*const numberButtons = document.querySelectorAll('.num');
 const decimalPoint = document.getElementById('decimal');
 const math = document.querySelectorAll('.math');
 const addition = document.getElementById('addition');
@@ -83,9 +83,229 @@ const percentage = document.getElementById('percent');
 const clear = document.getElementById('clear');
 const clearEntry = document.getElementById('clear-entry');
 const equals = document.getElementById('equals');
-const negativeToggle = document.getElementById('negative-toggle');
+/*const negativeToggle = document.getElementById('negative-toggle');*/
+const allButtons = document.querySelectorAll('button');
 
-addition.onclick = () => operator = '+';
+allButtons.forEach(button => {
+    button.addEventListener('click', function (e) {
+
+        //Clear buttons
+        if (this.innerText === 'CE') {
+            display.innerText = '';
+            negActive = false;
+        } else if (this.innerText === 'C') {
+            clears();
+
+        //Operator buttons
+        } else if (this.innerText === '+' || this.innerText === '-' || this.innerText === '/' || this.innerText === '*') {
+            operator = this.innerText;
+            if (prevButton === undefined) {
+                if (display.innerText === '') {
+                    return;
+                } else {
+                    prevButton = e.target;
+                    firstValue = displayValue;
+                    upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
+                    display.innerText = '';
+                    e.target.style.backgroundColor = 'pink';
+                }
+            } else if (e.target === prevButton) {
+                if (display.innerText === '') {
+                    e.target.style.backgroundColor = "pink";
+                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
+                    if (sum === undefined) {
+                        return;
+                    } else {
+                        sumDisplay.innerText = sum;
+                    }
+                    return;
+                } else {
+                    secondValue = displayValue;
+                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
+                    display.innerText = '';
+                }
+            } else {
+                if (display.innerText === '') {
+                    prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                    prevButton = e.target;
+                    e.target.style.backgroundColor = "pink";
+                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
+                    if (sum === undefined) {
+                        return;
+                    } else {
+                        sumDisplay.innerText = sum;
+                    }
+                    return;
+                } else {
+                    secondValue = displayValue;
+                    prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                    prevButton = e.target;
+                    e.target.style.backgroundColor = "pink";
+                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
+                    display.innerText = '';
+                }
+            }
+
+            //Calculation called here if user is forming a running calculation. Running calc used to store calculation history for retrieval of previous operator.
+            const runningCalc = upperDisplay.innerText.replace(/[^+-\/*]/g, '').replace(/[.]/g, '');
+            if (runningCalc.length === 1 && negActive === false) {
+                prevOperator = runningCalc[runningCalc.length - 1];
+                return;
+            } else if (runningCalc.length === 2 && negActive === true) {
+                prevOperator = runningCalc[runningCalc.length - 1];
+                negActive = false;
+                return;
+            } else {
+                if (sum === undefined) {
+                    if (secondValue && secondValue[0] === '-') {
+                        prevOperator = runningCalc[runningCalc.length - 3];
+                        negActive = false;
+                    } else {
+                        prevOperator = runningCalc[runningCalc.length - 2];
+                    }
+                    sum = operate(prevOperator, firstValue, secondValue);
+                    sumDisplay.innerText = sum;
+                } else {
+                    if (secondValue[0] === '-') {
+                        prevOperator = runningCalc[runningCalc.length - 3];
+                        negActive = false;
+                    } else {
+                        prevOperator = runningCalc[runningCalc.length - 2];
+                    }
+                    sum = operate(prevOperator, sum, secondValue);
+                    sumDisplay.innerText = sum;
+                }
+            }
+
+        //Percentage button
+        } else if (this.innerText === '%') {
+            if (display.innerText === '') {
+                return;
+            } else if (firstValue !== undefined && secondValue === undefined) {
+                let b = display.innerText;
+                if (prevOperator === '*' || prevOperator === '/') {
+                    display.innerText = display.innerText / 100;
+                    displayValue = display.innerText;
+                } else {
+                    let percentResult = percent(firstValue, b);
+                    display.innerText = percentResult;
+                    displayValue = display.innerText;
+                }
+            } else if (sum !== undefined && secondValue !== undefined) {
+                let b = display.innerText;
+                if (operator === '*' || operator === '/') {
+                    display.innerHTML = display.innerText / 100;
+                    displayValue = display.innerText;
+                } else {
+                    let percentResult = percent(sum, b);
+                    display.innerText = percentResult;
+                    displayValue = display.innerText;
+                }
+            }
+
+        //Number buttons
+        } else if (!isNaN(this.innerText)) {
+            const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
+            if (removeEqual[0] !== '=') {
+                display.innerText += this.innerText;
+                displayValue = display.innerText;
+            } else {
+                display.innerText += this.innerText;
+                displayValue = display.innerText;
+                operator = undefined;
+                prevOperator = undefined;
+                prevButton = undefined;
+                firstValue = undefined;
+                secondValue = undefined;
+                sum = undefined;
+                upperDisplay.innerText = '';
+                sumDisplay.innerText = '';
+            }
+
+        //Negative toggle button
+        } else if (this.innerText === '-/+') {
+            if (display.innerText === '') {
+                return;
+            } else if (display.innerText[0] !== '-') {
+                display.innerText = '-' + display.innerText;
+                displayValue = display.innerText;
+                negActive = true;
+            } else {
+                let negStr = display.innerText;
+                negStr = negStr.substring(1);
+                display.innerText = negStr;
+                displayValue = negStr;
+                negActive = false;
+            }
+
+        //Decimal place button
+        } else if (this.innerText === '.') {
+            const hasDecimal = display.innerText.replace(/[^.]/g, '');
+            const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
+            if (hasDecimal[0] !== '.' && removeEqual[0] !== '=') {
+                if (display.innerText === '') {
+                    display.innerText = 0 + this.innerText;
+                    displayValue = display.innerText;
+                } else {
+                    display.innerText += this.innerText;
+                    displayValue = display.innerText;
+                }
+            } else if (hasDecimal[0] !== '.' && removeEqual[0] === '=') {
+                display.innerText = 0 + this.innerText;
+                displayValue = display.innerText;
+                operator = undefined;
+                prevOperator = undefined;
+                prevButton = undefined;
+                firstValue = undefined;
+                secondValue = undefined;
+                sum = undefined;
+                upperDisplay.innerText = '';
+                sumDisplay.innerText = '';
+            } else {
+                return;
+            }
+
+        //Equals button
+        } else if (this.innerText === '=') {
+            if (upperDisplay.innerText === '') {
+                return;
+            }
+            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+            const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
+            if (removeEqual[0] !== '=') {
+                if (display.innerText === '') {
+                    if (sum === undefined) {
+                        sumDisplay.innerText = firstValue;
+                    } else {
+                        sumDisplay.innerText = sum;
+                    }
+                    upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + '=';
+                } else {
+                    if (sum === undefined) {
+                        secondValue = displayValue;
+                        sumDisplay.innerText = operate(operator, firstValue, secondValue);
+                        sum = sumDisplay.innerText;
+                        upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
+                        upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+                        display.innerText = '';
+                    } else {
+                        secondValue = displayValue;
+                        sumDisplay.innerText = operate(operator, sum, secondValue);
+                        sum = sumDisplay.innerText;
+                        upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
+                        upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+                        display.innerText = '';
+                    }
+                }
+            } else {
+                return;
+            }
+        }
+    })
+})
+
+
+/*addition.onclick = () => operator = '+';
 subtraction.onclick = () => operator = '-';
 multiplication.onclick = () => operator = '*';
 division.onclick = () => operator = '/';
@@ -93,8 +313,8 @@ clear.onclick = () => clears();
 clearEntry.onclick = () => {
     display.innerText = '';
     negActive = false;
-};
-percentage.onclick = () => {
+};*/
+/*percentage.onclick = () => {
     if (display.innerText === '') {
         return;
     } else if (firstValue !== undefined && secondValue === undefined) {
@@ -118,9 +338,9 @@ percentage.onclick = () => {
             displayValue = display.innerText;
         }
     }
-}
+}*/
 
-numberButtons.forEach(numberButton => {
+/*numberButtons.forEach(numberButton => {
     numberButton.addEventListener('click', function (e) {
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         if (removeEqual[0] !== '=') {
@@ -139,9 +359,9 @@ numberButtons.forEach(numberButton => {
             sumDisplay.innerText = '';
         }
     })
-});
+});*/
 
-negativeToggle.addEventListener('click', function (e) {
+/*negativeToggle.addEventListener('click', function (e) {
     if (display.innerText === '') {
         return;
     } else if (display.innerText[0] !== '-') {
@@ -155,9 +375,9 @@ negativeToggle.addEventListener('click', function (e) {
         displayValue = negStr;
         negActive = false;
     }
-})
+})*/
 
-decimalPoint.addEventListener('click', function (e) {
+/*decimalPoint.addEventListener('click', function (e) {
     const hasDecimal = display.innerText.replace(/[^.]/g, '');
     const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
     if (hasDecimal[0] !== '.' && removeEqual[0] !== '=') {
@@ -182,9 +402,9 @@ decimalPoint.addEventListener('click', function (e) {
     } else {
         return;
     }
-})
+})*/
 
-math.forEach(operatorButton => {
+/*math.forEach(operatorButton => {
     operatorButton.addEventListener('click', function (e) {
         if (prevButton === undefined) {
             if (display.innerText === '') {
@@ -262,9 +482,9 @@ math.forEach(operatorButton => {
             }
         }
     })
-});
+});*/
 
-equals.addEventListener('click', function (e) {
+/*equals.addEventListener('click', function (e) {
     if (upperDisplay.innerText === '') {
         return;
     }
@@ -298,6 +518,4 @@ equals.addEventListener('click', function (e) {
     } else {
         return;
     }
-})
-
-
+})*/
