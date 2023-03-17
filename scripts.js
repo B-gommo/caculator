@@ -74,33 +74,45 @@ const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.disable');
 const allButtons = document.querySelectorAll('button');
 
+
+
 allButtons.forEach(button => {
     button.addEventListener('click', function (e) {
+        console.log('help');
+        e = this;
+        console.log(e);
+        buttonActioned(e);
+    })
+});
+
+function buttonActioned(e) {
+    console.log(e);
 
         //Clear buttons
-        if (this.innerText === 'CE') {
+        if (e.innerText === 'CE') {
             display.innerText = '';
             negActive = false;
-        } else if (this.innerText === 'C') {
+        } else if (e.innerText === 'C') {
             clears();
 
         //Operator buttons
-        } else if (this.innerText === '+' || this.innerText === '-' || this.innerText === '/' || this.innerText === '*') {
-            operator = this.innerText;
+        } else if (e.innerText === '+' || e.innerText === '-' || e.innerText === '/' || e.innerText === '*') {
+            operator = e.innerText;
             if (prevButton === undefined) {
                 if (display.innerText === '') {
                     return;
                 } else {
-                    prevButton = e.target;
+                    prevButton = e;
                     firstValue = displayValue;
-                    upperDisplay.innerText += displayValue + ' ' + e.target.innerText;
+                    console.log(e.target);
+                    upperDisplay.innerText += displayValue + ' ' + e.innerText;
                     display.innerText = '';
-                    e.target.style.backgroundColor = 'pink';
+                    e.style.backgroundColor = 'pink';
                 }
-            } else if (e.target === prevButton) {
+            } else if (e === prevButton) {
                 if (display.innerText === '') {
-                    e.target.style.backgroundColor = "pink";
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
+                    e.style.backgroundColor = "pink";
+                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
                     if (sum === undefined) {
                         return;
                     } else {
@@ -109,15 +121,15 @@ allButtons.forEach(button => {
                     return;
                 } else {
                     secondValue = displayValue;
-                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
+                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
                     display.innerText = '';
                 }
             } else {
                 if (display.innerText === '') {
                     prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                    prevButton = e.target;
-                    e.target.style.backgroundColor = "pink";
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.target.innerText;
+                    prevButton = e;
+                    e.style.backgroundColor = "pink";
+                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
                     if (sum === undefined) {
                         return;
                     } else {
@@ -127,9 +139,9 @@ allButtons.forEach(button => {
                 } else {
                     secondValue = displayValue;
                     prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                    prevButton = e.target;
-                    e.target.style.backgroundColor = "pink";
-                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.target.innerText;
+                    prevButton = e;
+                    e.style.backgroundColor = "pink";
+                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
                     display.innerText = '';
                 }
             }
@@ -166,7 +178,7 @@ allButtons.forEach(button => {
             }
 
         //Percentage button
-        } else if (this.innerText === '%') {
+        } else if (e.innerText === '%') {
             if (display.innerText === '') {
                 return;
             } else if (firstValue !== undefined && secondValue === undefined) {
@@ -192,13 +204,13 @@ allButtons.forEach(button => {
             }
 
         //Number buttons
-        } else if (!isNaN(this.innerText)) {
+        } else if (!isNaN(e.innerText)) {
             const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
             if (removeEqual[0] !== '=') {
-                display.innerText += this.innerText;
+                display.innerText += e.innerText;
                 displayValue = display.innerText;
             } else {
-                display.innerText += this.innerText;
+                display.innerText += e.innerText;
                 displayValue = display.innerText;
                 operator = undefined;
                 prevOperator = undefined;
@@ -211,7 +223,7 @@ allButtons.forEach(button => {
             }
 
         //Negative toggle button
-        } else if (this.innerText === '-/+') {
+        } else if (e.innerText === '-/+') {
             if (display.innerText === '') {
                 return;
             } else if (display.innerText[0] !== '-') {
@@ -227,19 +239,19 @@ allButtons.forEach(button => {
             }
 
         //Decimal place button
-        } else if (this.innerText === '.') {
+        } else if (e.innerText === '.') {
             const hasDecimal = display.innerText.replace(/[^.]/g, '');
             const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
             if (hasDecimal[0] !== '.' && removeEqual[0] !== '=') {
                 if (display.innerText === '') {
-                    display.innerText = 0 + this.innerText;
+                    display.innerText = 0 + e.innerText;
                     displayValue = display.innerText;
                 } else {
-                    display.innerText += this.innerText;
+                    display.innerText += e.innerText;
                     displayValue = display.innerText;
                 }
             } else if (hasDecimal[0] !== '.' && removeEqual[0] === '=') {
-                display.innerText = 0 + this.innerText;
+                display.innerText = 0 + e.innerText;
                 displayValue = display.innerText;
                 operator = undefined;
                 prevOperator = undefined;
@@ -254,7 +266,7 @@ allButtons.forEach(button => {
             }
 
         //Equals button
-        } else if (this.innerText === '=') {
+        } else if (e.innerText === '=') {
             if (upperDisplay.innerText === '') {
                 return;
             }
@@ -289,5 +301,4 @@ allButtons.forEach(button => {
                 return;
             }
         }
-    })
-});
+    };
