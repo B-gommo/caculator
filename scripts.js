@@ -41,7 +41,7 @@ function percent(a, b) {
 function clears(e) {
     operator = undefined;
     prevOperator = undefined;
-    if (prevButton !== undefined && !e) {
+    if (prevButton !== undefined) {
         prevButton.style.backgroundColor = "rgb(202, 130, 47)";
     }
     prevButton = undefined;
@@ -86,7 +86,7 @@ allButtons.forEach(button => {
 document.addEventListener('keydown', function (e) {
     if (Number(e.key) || e.key === '0'
         || e.key === '/' || e.key === '*' || e.key === '-' || e.key === '+' || e.key === '.'
-        || e.key === 'Enter' || e.key === '%' || e.key === 'Backspace' || e.key === 'c') {
+        || e.key === 'Enter' || e.key === '%' || e.key === 'Backspace' || e.key === 'Escape' || e.key === 'F9') {
         buttonActioned(e);
     } return;
 });
@@ -97,7 +97,7 @@ function buttonActioned(e) {
     if (e.innerText === 'CE' || e.key === 'Backspace') {
         display.innerText = '';
         negActive = false;
-    } else if (e.innerText === 'C' || e.key === 'c') {
+    } else if (e.innerText === 'C' || e.key === 'Escape') {
         if (e.type === 'keydown') {
             clears(e);
         } else {
@@ -117,20 +117,38 @@ function buttonActioned(e) {
                 return;
             } else {
                 if (e.type === 'keydown') {
-                    prevButton = e.key;
+                    switch (e.key) {
+                        case '+':
+                            prevButton = document.getElementById('addition');
+                            break;
+                        case '-':
+                            prevButton = document.getElementById('subtraction');
+                            break;
+                        case '*':
+                            prevButton = document.getElementById('multiplication');
+                            break;
+                        case '/':
+                            prevButton = document.getElementById('division');
+                            break;
+                    }
                     upperDisplay.innerText += displayValue + ' ' + e.key;
                 } else {
                     prevButton = e;
                     upperDisplay.innerText += displayValue + ' ' + e.innerText;
-                    e.style.backgroundColor = 'pink';
                 }
+                prevButton.style.backgroundColor = 'pink';
                 firstValue = displayValue;
                 display.innerText = '';
             }
-        } else if (e === prevButton) {
+        } else if (e === prevButton || e.key === prevButton.innerText) {
             if (display.innerText === '') {
-                e.style.backgroundColor = "pink";
-                upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
+                prevButton.style.backgroundColor = "pink";
+                if (e.type === 'keydown') {
+                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.key;
+                } else {
+                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
+                }
+
                 if (sum === undefined) {
                     return;
                 } else {
@@ -139,20 +157,42 @@ function buttonActioned(e) {
                 return;
             } else {
                 secondValue = displayValue;
+                if (e.type === 'keydown') {
+                upperDisplay.innerText += ' ' + displayValue + ' ' + e.key;
+            } else {
                 upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
+            }
                 display.innerText = '';
             }
         } else {
             if (display.innerText === '') {
                 if (e.type === 'keydown') {
-                    prevButton = e.key;
+                    switch (e.key) {
+                        case '+':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('addition');
+                            break;
+                        case '-':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('subtraction');
+                            break;
+                        case '*':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('multiplication');
+                            break;
+                        case '/':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('division');
+                            break;
+                    }
                     upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.key;
                 } else {
                     prevButton.style.backgroundColor = "rgb(202, 130, 47)";
                     prevButton = e;
-                    e.style.backgroundColor = "pink";
                     upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
                 }
+                prevButton.style.backgroundColor = "pink";
+
                 if (sum === undefined) {
                     return;
                 } else {
@@ -162,15 +202,32 @@ function buttonActioned(e) {
             } else {
                 if (e.type === 'keydown') {
                     secondValue = displayValue;
-                    prevButton = e.key;
+                    switch (e.key) {
+                        case '+':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('addition');
+                            break;
+                        case '-':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('subtraction');
+                            break;
+                        case '*':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('multiplication');
+                            break;
+                        case '/':
+                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                            prevButton = document.getElementById('division');
+                            break;
+                    }
                     upperDisplay.innerText += ' ' + displayValue + ' ' + e.key;
                 } else {
                     secondValue = displayValue;
                     prevButton.style.backgroundColor = "rgb(202, 130, 47)";
                     prevButton = e;
-                    e.style.backgroundColor = "pink";
                     upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
                 }
+                prevButton.style.backgroundColor = "pink";
                 display.innerText = '';
             }
         }
@@ -260,7 +317,7 @@ function buttonActioned(e) {
         }
 
         //Negative toggle button
-    } else if (e.innerText === '-/+') {
+    } else if (e.innerText === '-/+' || e.key === 'F9') {
         if (display.innerText === '') {
             return;
         } else if (display.innerText[0] !== '-') {
@@ -319,9 +376,10 @@ function buttonActioned(e) {
         if (upperDisplay.innerText === '') {
             return;
         }
-        if (e.type !== 'keydown') {
-            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+        if (negActive === true) {
+            negActive = false;
         }
+        prevButton.style.backgroundColor = "rgb(202, 130, 47)";
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         if (removeEqual[0] !== '=') {
             if (display.innerText === '') {
