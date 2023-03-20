@@ -373,6 +373,11 @@ function buttonActioned(e) {
 
         //Equals button
     } else if (e.innerText === '=' || e.key === 'Enter') {
+
+        if (document.hasFocus()) {
+            document.activeElement.blur();
+        }
+
         if (upperDisplay.innerText === '') {
             return;
         }
