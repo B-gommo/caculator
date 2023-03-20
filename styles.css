@@ -81,11 +81,12 @@ h1, h2 {
     align-self: end;
     overflow: hidden;
     font-size: 3rem;
-    white-space: nowrap; 
+    white-space: nowrap;
     margin-top: -6px;
+    height: 40px;
 }
 
-#upper-display, #sum-display, #display {
+#upper-display, #sum-display {
     height: 35px;
 }
 
