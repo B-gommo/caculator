@@ -27,6 +27,7 @@ function operate(operator, a, b) {
                 button.classList.add('filter');
                 button.disabled = true;
             })
+            devideByZero = true;
             return "Are you trying to break me?"
         } else {
             return Number.isInteger(divide(a, b)) ? Number(divide(a, b)) : Number(divide(a, b).toFixed(4));
@@ -53,10 +54,13 @@ function clears(e) {
     upperDisplay.innerText = '';
     sumDisplay.innerText = '';
     negActive = false;
+    if (devideByZero) {
     buttons.forEach(button => {
         button.classList.remove('filter');
         button.disabled = false;
     })
+    devideByZero = false;
+}
 }
 
 let operator;
@@ -67,6 +71,7 @@ let secondValue;
 let sum;
 let prevButton;
 let negActive = false;
+let devideByZero = false;
 
 const upperDisplay = document.getElementById('upper-display');
 const sumDisplay = document.getElementById('sum-display');
