@@ -84,10 +84,46 @@ allButtons.forEach(button => {
 });
 
 document.addEventListener('keydown', function (e) {
-    if (Number(e.key) || e.key === '0'
-        || e.key === '/' || e.key === '*' || e.key === '-' || e.key === '+' || e.key === '.'
-        || e.key === 'Enter' || e.key === '%' || e.key === 'Backspace' || e.key === 'Escape' || e.key === 'F9') {
-        buttonActioned(e);
+    if (Number(e.key) ||
+        e.key === '0' ||
+        e.key === '/' ||
+        e.key === '*' ||
+        e.key === '-' ||
+        e.key === '+' ||
+        e.key === '.' ||
+        e.key === 'Enter' ||
+        e.key === '%' ||
+        e.key === 'Backspace' ||
+        e.key === 'Escape' ||
+        e.key === 'F9') {
+        allButtons.forEach(button => {
+
+            let searchedText;
+            switch (e.key) {
+                case 'Backspace':
+                    searchedText = 'CE';
+                    break;
+                case 'Escape':
+                    searchedText = 'C';
+                    break;
+                case '%':
+                    searchedText = '%'
+                    break;
+                case 'F9':
+                    searchedText = '-/+'
+                    break;
+                case 'Enter':
+                    searchedText = '='
+                    break;
+                default:
+                    searchedText = e.key;
+                    break;
+            }
+            if (searchedText === button.innerText) {
+                let buttonPressed = button;
+                buttonActioned(buttonPressed);
+            }
+        })
     } return;
 });
 
@@ -158,10 +194,10 @@ function buttonActioned(e) {
             } else {
                 secondValue = displayValue;
                 if (e.type === 'keydown') {
-                upperDisplay.innerText += ' ' + displayValue + ' ' + e.key;
-            } else {
-                upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
-            }
+                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.key;
+                } else {
+                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
+                }
                 display.innerText = '';
             }
         } else {
