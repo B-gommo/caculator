@@ -121,6 +121,7 @@ document.addEventListener('keydown', function (e) {
             }
             if (searchedText === button.innerText) {
                 let buttonPressed = button;
+                button.focus();
                 buttonActioned(buttonPressed);
             }
         })
