@@ -108,6 +108,24 @@ button {
     padding: 0;
 }
 
+#keyboard-key {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 320px;
+    row-gap: 1rem;
+    column-gap: 2rem;
+    background-color: white;
+    border-radius: 15px;
+    border: 3px solid black;
+    padding: 1rem;
+}
+
+#keyboard-key h2 {
+    width: 100%;
+    text-align: center;
+}
+
 .filter {
     filter: grayscale(80%) blur(2px);
 }
@@ -134,4 +152,10 @@ button {
 
 .modify {
     background-color: var(--misc);
+}
+
+@media only screen and (max-width: 430px) {
+    #keyboard-key {
+        display: none;
+    }
 }
