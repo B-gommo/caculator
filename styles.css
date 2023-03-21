@@ -28,10 +28,13 @@ h1, h2 {
     font-family: 'orbitron';
 }
 
+body {
+    background-color: var(--body);
+}
+
 #main {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     gap: 15px;
     justify-content: center;
     align-items: center;
