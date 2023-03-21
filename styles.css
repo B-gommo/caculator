@@ -34,6 +34,7 @@ body {
 
 #main {
     display: flex;
+    padding-top: 30px;
     flex-direction: column;
     gap: 15px;
     justify-content: center;
@@ -160,5 +161,9 @@ button {
 @media only screen and (max-width: 430px) {
     #keyboard-key {
         display: none;
+    }
+
+    #main {
+        padding-top: 0px;
     }
 }
