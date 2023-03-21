@@ -74,8 +74,6 @@ const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.disable');
 const allButtons = document.querySelectorAll('button');
 
-
-
 allButtons.forEach(button => {
     button.addEventListener('click', function (e) {
         e = this;
@@ -97,7 +95,6 @@ document.addEventListener('keydown', function (e) {
         e.key === 'Escape' ||
         e.key === 'F9') {
         allButtons.forEach(button => {
-
             let searchedText;
             switch (e.key) {
                 case 'Backspace':
@@ -135,13 +132,11 @@ function buttonActioned(e) {
         display.innerText = '';
         negActive = false;
     } else if (e.innerText === 'C') {
-            clears();
+        clears();
 
         //Operator buttons
     } else if (e.innerText === '+' || e.innerText === '-' || e.innerText === '/' || e.innerText === '*') {
-
-            operator = e.innerText;
-
+        operator = e.innerText;
         if (prevButton === undefined) {
             if (display.innerText === '') {
                 return;
@@ -229,22 +224,20 @@ function buttonActioned(e) {
             let b = display.innerText;
             if (prevOperator === '*' || prevOperator === '/') {
                 display.innerText = display.innerText / 100;
-                displayValue = display.innerText;
             } else {
                 let percentResult = percent(firstValue, b);
                 display.innerText = percentResult;
-                displayValue = display.innerText;
             }
+            displayValue = display.innerText;
         } else if (sum !== undefined && secondValue !== undefined) {
             let b = display.innerText;
             if (operator === '*' || operator === '/') {
                 display.innerHTML = display.innerText / 100;
-                displayValue = display.innerText;
             } else {
                 let percentResult = percent(sum, b);
                 display.innerText = percentResult;
-                displayValue = display.innerText;
             }
+            displayValue = display.innerText;
         }
 
         //Number buttons
@@ -252,19 +245,11 @@ function buttonActioned(e) {
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         if (removeEqual[0] !== '=') {
             display.innerText += e.innerText;
-            displayValue = display.innerText;
         } else {
+            clears();
             display.innerText += e.innerText;
-            displayValue = display.innerText;
-            operator = undefined;
-            prevOperator = undefined;
-            prevButton = undefined;
-            firstValue = undefined;
-            secondValue = undefined;
-            sum = undefined;
-            upperDisplay.innerText = '';
-            sumDisplay.innerText = '';
         }
+        displayValue = display.innerText;
 
         //Negative toggle button
     } else if (e.innerText === '-/+') {
@@ -285,37 +270,27 @@ function buttonActioned(e) {
         //Decimal place button
     } else if (e.innerText === '.') {
         const hasDecimal = display.innerText.replace(/[^.]/g, '');
-        const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
-        if (hasDecimal[0] !== '.' && removeEqual[0] !== '=') {
+        const hasEqual = upperDisplay.innerText.replace(/[^=]/g, '');
+        if (hasDecimal[0] !== '.' && hasEqual[0] !== '=') {
             if (display.innerText === '') {
                 display.innerText = 0 + e.innerText;
-                displayValue = display.innerText;
             } else {
                 display.innerText += e.innerText;
-                displayValue = display.innerText;
             }
-        } else if (hasDecimal[0] !== '.' && removeEqual[0] === '=') {
+            displayValue = display.innerText;
+        } else if (hasDecimal[0] !== '.' && hasEqual[0] === '=') {
+            clears();
             display.innerText = 0 + e.innerText;
             displayValue = display.innerText;
-            operator = undefined;
-            prevOperator = undefined;
-            prevButton = undefined;
-            firstValue = undefined;
-            secondValue = undefined;
-            sum = undefined;
-            upperDisplay.innerText = '';
-            sumDisplay.innerText = '';
         } else {
             return;
         }
 
         //Equals button
     } else if (e.innerText === '=') {
-
         if (document.hasFocus()) {
             document.activeElement.blur();
         }
-
         if (upperDisplay.innerText === '') {
             return;
         }
@@ -336,18 +311,14 @@ function buttonActioned(e) {
                 if (sum === undefined) {
                     secondValue = displayValue;
                     sumDisplay.innerText = operate(operator, firstValue, secondValue);
-                    sum = sumDisplay.innerText;
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
-                    upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
-                    display.innerText = '';
                 } else {
                     secondValue = displayValue;
                     sumDisplay.innerText = operate(operator, sum, secondValue);
-                    sum = sumDisplay.innerText;
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
-                    upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
-                    display.innerText = '';
                 }
+                sum = sumDisplay.innerText;
+                upperDisplay.innerText = upperDisplay.innerText.slice(0, upperDisplay.innerText.length - 1) + operator;
+                upperDisplay.innerText = upperDisplay.innerText + ' ' + secondValue + ' ' + '=';
+                display.innerText = '';
             }
         } else {
             return;
