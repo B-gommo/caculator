@@ -130,60 +130,48 @@ document.addEventListener('keydown', function (e) {
 function buttonActioned(e) {
 
     //Clear buttons
-    if (e.innerText === 'CE' || e.key === 'Backspace') {
+    if (e.innerText === 'CE') {
         display.innerText = '';
         negActive = false;
-    } else if (e.innerText === 'C' || e.key === 'Escape') {
-        if (e.type === 'keydown') {
-            clears(e);
-        } else {
+    } else if (e.innerText === 'C') {
             clears();
-        }
 
         //Operator buttons
-    } else if (e.innerText === '+' || e.innerText === '-' || e.innerText === '/' || e.innerText === '*' || e.key === '+' ||
-        e.key === '-' || e.key === '*' || e.key === '/') {
-        if (e.type === 'keydown') {
-            operator = e.key;
-        } else {
+    } else if (e.innerText === '+' || e.innerText === '-' || e.innerText === '/' || e.innerText === '*') {
+
             operator = e.innerText;
-        }
+
         if (prevButton === undefined) {
             if (display.innerText === '') {
                 return;
             } else {
-                if (e.type === 'keydown') {
-                    switch (e.key) {
-                        case '+':
-                            prevButton = document.getElementById('addition');
-                            break;
-                        case '-':
-                            prevButton = document.getElementById('subtraction');
-                            break;
-                        case '*':
-                            prevButton = document.getElementById('multiplication');
-                            break;
-                        case '/':
-                            prevButton = document.getElementById('division');
-                            break;
-                    }
-                    upperDisplay.innerText += displayValue + ' ' + e.key;
-                } else {
-                    prevButton = e;
-                    upperDisplay.innerText += displayValue + ' ' + e.innerText;
-                }
+                prevButton = e;
+                upperDisplay.innerText += displayValue + ' ' + e.innerText;
                 prevButton.style.backgroundColor = 'pink';
                 firstValue = displayValue;
                 display.innerText = '';
             }
-        } else if (e === prevButton || e.key === prevButton.innerText) {
+        } else if (e === prevButton) {
             if (display.innerText === '') {
                 prevButton.style.backgroundColor = "pink";
-                if (e.type === 'keydown') {
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.key;
+                upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
+                if (sum === undefined) {
+                    return;
                 } else {
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
+                    sumDisplay.innerText = sum;
                 }
+                return;
+            } else {
+                secondValue = displayValue;
+                upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
+                display.innerText = '';
+            }
+        } else {
+            if (display.innerText === '') {
+                prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                prevButton = e;
+                upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
+                prevButton.style.backgroundColor = "pink";
 
                 if (sum === undefined) {
                     return;
@@ -193,76 +181,9 @@ function buttonActioned(e) {
                 return;
             } else {
                 secondValue = displayValue;
-                if (e.type === 'keydown') {
-                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.key;
-                } else {
-                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
-                }
-                display.innerText = '';
-            }
-        } else {
-            if (display.innerText === '') {
-                if (e.type === 'keydown') {
-                    switch (e.key) {
-                        case '+':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('addition');
-                            break;
-                        case '-':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('subtraction');
-                            break;
-                        case '*':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('multiplication');
-                            break;
-                        case '/':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('division');
-                            break;
-                    }
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.key;
-                } else {
-                    prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                    prevButton = e;
-                    upperDisplay.innerText = upperDisplay.innerText.slice(0, -1) + ' ' + e.innerText;
-                }
-                prevButton.style.backgroundColor = "pink";
-
-                if (sum === undefined) {
-                    return;
-                } else {
-                    sumDisplay.innerText = sum;
-                }
-                return;
-            } else {
-                if (e.type === 'keydown') {
-                    secondValue = displayValue;
-                    switch (e.key) {
-                        case '+':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('addition');
-                            break;
-                        case '-':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('subtraction');
-                            break;
-                        case '*':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('multiplication');
-                            break;
-                        case '/':
-                            prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                            prevButton = document.getElementById('division');
-                            break;
-                    }
-                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.key;
-                } else {
-                    secondValue = displayValue;
-                    prevButton.style.backgroundColor = "rgb(202, 130, 47)";
-                    prevButton = e;
-                    upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
-                }
+                prevButton.style.backgroundColor = "rgb(202, 130, 47)";
+                prevButton = e;
+                upperDisplay.innerText += ' ' + displayValue + ' ' + e.innerText;
                 prevButton.style.backgroundColor = "pink";
                 display.innerText = '';
             }
@@ -300,7 +221,7 @@ function buttonActioned(e) {
         }
 
         //Percentage button
-    } else if (e.innerText === '%' || e.key === '%') {
+    } else if (e.innerText === '%') {
         if (display.innerText === '') {
             return;
         } else if (firstValue !== undefined && secondValue === undefined) {
@@ -326,21 +247,13 @@ function buttonActioned(e) {
         }
 
         //Number buttons
-    } else if (!isNaN(e.innerText) || !isNaN(e.key)) {
+    } else if (!isNaN(e.innerText)) {
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         if (removeEqual[0] !== '=') {
-            if (e.type === 'keydown') {
-                display.innerText += e.key;
-            } else {
-                display.innerText += e.innerText;
-            }
+            display.innerText += e.innerText;
             displayValue = display.innerText;
         } else {
-            if (e.type === 'keydown') {
-                display.innerText += e.key;
-            } else {
-                display.innerText += e.innerText;
-            }
+            display.innerText += e.innerText;
             displayValue = display.innerText;
             operator = undefined;
             prevOperator = undefined;
@@ -353,7 +266,7 @@ function buttonActioned(e) {
         }
 
         //Negative toggle button
-    } else if (e.innerText === '-/+' || e.key === 'F9') {
+    } else if (e.innerText === '-/+') {
         if (display.innerText === '') {
             return;
         } else if (display.innerText[0] !== '-') {
@@ -369,31 +282,19 @@ function buttonActioned(e) {
         }
 
         //Decimal place button
-    } else if (e.innerText === '.' || e.key === '.') {
+    } else if (e.innerText === '.') {
         const hasDecimal = display.innerText.replace(/[^.]/g, '');
         const removeEqual = upperDisplay.innerText.replace(/[^=]/g, '');
         if (hasDecimal[0] !== '.' && removeEqual[0] !== '=') {
             if (display.innerText === '') {
-                if (e.type === 'keydown') {
-                    display.innerText = 0 + e.key;
-                } else {
-                    display.innerText = 0 + e.innerText;
-                }
+                display.innerText = 0 + e.innerText;
                 displayValue = display.innerText;
             } else {
-                if (e.type === 'keydown') {
-                    display.innerText += e.key;
-                } else {
-                    display.innerText += e.innerText;
-                }
+                display.innerText += e.innerText;
                 displayValue = display.innerText;
             }
         } else if (hasDecimal[0] !== '.' && removeEqual[0] === '=') {
-            if (e.type === 'keydown') {
-                display.innerText = 0 + e.key;
-            } else {
-                display.innerText = 0 + e.innerText;
-            }
+            display.innerText = 0 + e.innerText;
             displayValue = display.innerText;
             operator = undefined;
             prevOperator = undefined;
@@ -408,7 +309,7 @@ function buttonActioned(e) {
         }
 
         //Equals button
-    } else if (e.innerText === '=' || e.key === 'Enter') {
+    } else if (e.innerText === '=') {
 
         if (document.hasFocus()) {
             document.activeElement.blur();
